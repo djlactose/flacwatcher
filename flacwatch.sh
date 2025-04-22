@@ -13,16 +13,18 @@ for cmd in ffmpeg inotifywait; do
 done
 
 convert_flac () {
-  local src="$1"
-  local dst="${src%.flac}.mp3"
+  local src=$1
+  local dst=${src%.flac}.mp3
 
   echo "🎧  $src  →  ${dst##*/}"
-  ffmpeg -loglevel error -y -i "$src" -c:a libmp3lame -q:a "$QUALITY" -map_metadata 0 "$dst"
+  ffmpeg -nostdin -loglevel error -y -i "$src" \
+         -c:a libmp3lame -q:a "$QUALITY" -map_metadata 0 "$dst"
 
-  if [[ $? -eq 0 && "$DELETE" == "true" ]]; then
+  if [[ $? -eq 0 && $DELETE == true ]]; then
     rm -- "$src"
   fi
 }
+
 
 # ── Optional initial sweep ───────────────────────────────────────────────────
 if [[ "$DO_INITIAL" == "true" ]]; then
