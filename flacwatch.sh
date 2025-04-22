@@ -25,7 +25,6 @@ convert_flac () {
   fi
 }
 
-
 # ── Optional initial sweep ───────────────────────────────────────────────────
 if [[ "$DO_INITIAL" == "true" ]]; then
   shopt -s globstar nullglob
